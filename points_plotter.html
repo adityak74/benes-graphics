@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<canvas id="myCanvas" width="600" height="600" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+
+var c = document.getElementById("myCanvas");
+
+var width = c.width;
+var height = c.height;
+
+//alert("Width : " + width + ", Height :" + height);
+//Get the Benes level to print here with a prompt
+
+function coordinate(x, y) {
+    this.x = x;
+    this.y = y;
+}
+
+function drawBenes(c,width,height,benesLevel){
+	var cxt = c.getContext("2d");
+	var level = parseInt(benesLevel);
+	var Fheight = Fwidth = 600;
+	var vsplits = Math.pow(2,level+1);
+	var vwidth = Fheight/vsplits;
+	vy = Array();
+	vx = Array();
+	var baseno = 4;
+  	harrpts = Array();
+	vy.push(vwidth);
+
+	//x coordinate for all our diagrams will be 300
+	vx.push(300);
+
+	for (var i = 0; i < ((vsplits/2)-1); i++) {
+		vy.push((vy[i]+2*vwidth));
+		vx.push(300);
+	}
+
+	var vcords = Array();
+
+	for (var i=0; i < vx.length; i++){
+		vcords.push(new coordinate(vx[i],vy[i]));
+	}
+
+  	for(var i=1; i < level+1; i++){
+  		var temp = harrpts.slice();
+  		mvalue = Math.pow(2,i+1);
+  		harrpts.push(mvalue);
+  		if(temp.length>0){
+  			for(k=0;k<temp.length;k++){
+  				harrpts.push(temp[k]);
+  			}
+  		}
+  		temp = new Array();
+  	}
+
+  	console.log("horizontal points length: " + harrpts.length);
+
+  	//Start of the logic for calculating the coordinates values for the horizontal nodes
+
+  	hx = new Array();
+  	hy = new Array();
+  	hcord = new Array();
+
+  	var newheight=2*vwidth;
+  	hy.push(newheight);
+
+  	//console.log(harrpts.length);
+
+  	for(var i in harrpts){
+  		hwidth = Fwidth / (2 * harrpts[i]);
+  		hx.push(hwidth);
+  		for(var j=0; j < harrpts[i]-1;j++){
+  			hx.push(hx[j]+2*hwidth);
+			hy.push(newheight);
+  		}
+  		for(k=0;k<hx.length;k++){
+  			hcord.push(new coordinate(hx[k],hy[k]));
+  		}
+  		newheight=parseInt(hy.pop())+2*vwidth;
+		hx = new Array();
+		hy = new Array();
+		hy.push(newheight);
+		//console.log("Doing for : " + harrpts[i])
+  	}
+  	var strph = "",strpv = "";
+  	var noOfCoords = 0;
+  	for(i=0;i<hcord.length;i++){
+  		strph += "(" + hcord[i].x + "," + hcord[i].y + ")";
+  		if(i<hcord.length-1){ strph += ","; }
+  		cxt.beginPath();
+  		cxt.arc(hcord[i].x,hcord[i].y,2,0,2*Math.PI);
+  		cxt.stroke();
+  		noOfCoords++;
+  	}
+
+  	
+
+  	for(i=0;i<vcords.length;i++){
+  		strpv += "(" + vcords[i].x + "," + vcords[i].y + ")";
+  		if(i<vcords.length-1){ strpv += ","; }
+  		cxt.beginPath();
+  		cxt.arc(vcords[i].x,vcords[i].y,2,0,2*Math.PI);
+  		cxt.stroke();
+  		noOfCoords++;
+  	}
+
+  	console.log(strph + strpv);
+  	console.log("Total Nodes : " + noOfCoords);
+}
+
+bLevel = prompt("Enter the Benes Level(less than 4) : ");
+drawBenes(c,width,height,parseInt(bLevel));
+
+</script>
+
+</body>
+</html>
