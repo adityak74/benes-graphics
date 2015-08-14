@@ -65,6 +65,11 @@ def exec_commands(cmds):
 
 level=input("Enter the Benes level")
 
+#calculate Wiener Index
+r=level
+wienerIndex = (2*(2**(2*r))*r)/3 + 4*(2**r)*(r**2) + (16*(2**r)*(r**3))/3 - (20*(2**(2*r)))/9 + (2*(2**r)*r)/3 + 6*(2**r) - 34/9
+
+
 if level==2:
 	print "Do you want to see all the cut diagrams?"
 	q = raw_input()
@@ -79,6 +84,7 @@ if level==2:
 		#os.system("python " + os.getcwd() + "/show_cuts_1.py")
 		#os.system("python " + os.getcwd() + "/show_cuts_2.py")
 	else:
+
 		Fheight=Fwidth=650
 		vsplits=2**(level+1)
 		vwidth=Fheight/vsplits
@@ -154,11 +160,12 @@ if level==2:
 		clock = pygame.time.Clock()
 		 
 		while not done:
-		 
+
+
 		    # This limits the while loop to a max of 10 times per second.
 		    # Leave this out and we will use all CPU we can.
 		    clock.tick(10)
-		     
+		    
 		    for event in pygame.event.get(): # User did something
 		        if event.type == pygame.QUIT: # If user clicked close
 		            done=True # Flag that we are done so we exit this loop
@@ -221,7 +228,9 @@ if level==2:
 		        start*=2
 
 		    
-		    
+		    myfont = pygame.font.SysFont("TimesNewRoman", 20)
+		    label = myfont.render("Wiener Index:" + str(wienerIndex), 1, (255,0,0))
+		    screen.blit(label, (5, 5))
 		    # Go ahead and update the screen with what we've drawn.
 		    # This MUST happen after all the other drawing commands.
 		    pygame.display.flip()
@@ -372,7 +381,9 @@ else:
 	                #popped two times to get two poppings
 	        start*=2
 
-	    
+	    myfont = pygame.font.SysFont("TimesNewRoman", 20)
+	    label = myfont.render("Wiener Index:" + str(wienerIndex), 1, (255,0,0))
+	    screen.blit(label, (5, 5))
 	    
 	    # Go ahead and update the screen with what we've drawn.
 	    # This MUST happen after all the other drawing commands.
