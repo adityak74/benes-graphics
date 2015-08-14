@@ -74,7 +74,7 @@ RED =   (255,   0,   0)
 size = [Fheight, Fwidth]
 screen = pygame.display.set_mode(size)
  
-pygame.display.set_caption("Graph Representation for Benes : " + str(level))
+pygame.display.set_caption("Cuts for Level 2 of Benes " + str(level))
  
 #Loop until the user clicks the close button.
 done = False
